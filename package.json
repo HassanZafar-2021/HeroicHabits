@@ -1,0 +1,24 @@
+{
+  "name": "heroichabits",
+  "version": "1.0.0",
+  "description": "Heroic Habits turns habit-building into an engaging adventure where users become the hero of their own story. By creating a personalized profile and hero avatar, users transform daily routines into quests and track their progress through a visually immersive journey. With its unique quest system and storytelling elements, Heroic Habits makes self-improvement fun and motivating.",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "build": "tsc"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.10.7",
+    "typescript": "^5.7.3"
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+    "fs": "^0.0.1-security"
+  }
+}
