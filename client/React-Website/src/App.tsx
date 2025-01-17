@@ -1,35 +1,52 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import QuestList from "./components/QuestList";
+import Progress from "./components/Progress";
+import Dashboard from "./components/Dashboard";
+import ProfileCard from "./components/ProfileCard"; // Add ProfileCard if you have it
+import Header from "./components/Header"; // Optionally, a header component for navigation
 
-function App() {
-  const [count, setCount] = useState(0)
-
+const App: React.FC = () => {
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <Router>
+      <div className="App">
+        <Header /> {/* This can be a header with links to different pages */}
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <Dashboard
+                userName="John Doe"
+                avatarUrl="https://example.com/avatar.jpg"
+                progress={50}
+                quests={[]}
+              />
+            }
+          />{" "}
+          {/* Home page / Dashboard */}
+          <Route path="/quests" element={<QuestList />} />{" "}
+          {/* Page to show quest list */}
+          <Route
+            path="/progress"
+            element={<Progress initialProgress={40} />}
+          />{" "}
+          {/* Show user's progress */}
+          <Route
+            path="/profile"
+            element={
+              <ProfileCard
+                username="John Doe"
+                avatarUrl="https://example.com/avatar.jpg"
+                progress={50}
+                onAvatarChange={() => {}}
+              />
+            }
+          />{" "}
+          {/* Optionally, a user profile page */}
+        </Routes>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    </Router>
+  );
+};
 
-export default App
+export default App;

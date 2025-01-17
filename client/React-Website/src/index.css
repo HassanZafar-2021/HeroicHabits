@@ -66,3 +66,75 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+.dashboard-container {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.avatar-container {
+  width: 80px;
+  height: 80px;
+}
+
+.streak-calendar-container {
+  margin-bottom: 30px;
+}
+
+.streak-duration-selector button {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 10px;
+  margin: 5px;
+  cursor: pointer;
+}
+
+.streak-duration-selector button:hover {
+  background-color: #45a049;
+}
+
+.streak-calendar {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-gap: 10px;
+}
+
+.calendar-day {
+  padding: 20px;
+  border: 1px solid #ddd;
+  text-align: center;
+  border-radius: 5px;
+}
+
+.calendar-day-number {
+  font-size: 18px;
+}
+
+.status.completed {
+  background-color: green;
+  border-radius: 50%;
+  width: 10px;
+  height: 10px;
+  margin-top: 10px;
+}
+
+.status.not-completed {
+  background-color: red;
+  border-radius: 50%;
+  width: 10px;
+  height: 10px;
+  margin-top: 10px;
+}
+
+.motivational-message {
+  font-size: 18px;
+  color: #333;
+  margin-top: 30px;
+}
