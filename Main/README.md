@@ -1,4 +1,4 @@
-# HeroicHabits# <Your-Project-Title>
+# HeroicHabits
 
 ## Description
 
