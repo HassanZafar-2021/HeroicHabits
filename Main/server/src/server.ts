@@ -1,24 +1,24 @@
-const forceDatabaseRefresh = false;
-
-import express from "express";
-import sequelize from "./config/connection.js";
-import routes from "./routes/index.js";
+import express, { Request, Response } from "express";
+import bodyParser from "body-parser";
+import * as cors from "cors";
+import apiRoutes from "./routes/api";
 
 const app = express();
-const PORT = process.env.PORT || 3001;
 
-// Serves static files in the entire client's dist folder
-app.use(express.static("../client/dist"));
+// Middleware
+app.use(bodyParser.json());
+app.use(cors()); // For handling cross-origin requests
 
-app.use(express.json());
-app.use(routes);
+// Use API routes
+app.use("/api", apiRoutes);
 
-app.get("/", (req, res) => {
-  res.send("../../client/React-Website/src/components/App.tsx");
+// Root route
+app.get("/", (_req: Request, res: Response) => {
+  res.send("Welcome to Heroic Habits API!");
 });
 
-sequelize.sync({ force: forceDatabaseRefresh }).then(() => {
-  app.listen(PORT, () => {
-    console.log(`Server is listening on port ${PORT}`);
-  });
+// Start the server
+const PORT = process.env.PORT ?? 3000;
+app.listen(PORT, () => {
+  console.log(`Server is running on http://localhost:${PORT}`);
 });
