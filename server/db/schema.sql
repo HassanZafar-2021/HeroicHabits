@@ -19,7 +19,9 @@ CREATE TABLE quests (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
-
+/*
+note: change this code into sequalize typescript
+*/
 -- Create Habits Table
 CREATE TABLE habits (
     id SERIAL PRIMARY KEY,
