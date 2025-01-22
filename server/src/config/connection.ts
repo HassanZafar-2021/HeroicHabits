@@ -1,21 +1,31 @@
-import dotenv from 'dotenv';
-dotenv.config();
+import type { Request, Response, NextFunction } from "express";
+import jwt from "jsonwebtoken";
 
-import { Sequelize } from 'sequelize';
+interface JwtPayload {
+  username: string;
+}
 
-const sequelize = process.env.DB_URL
-  ? new Sequelize(process.env.DB_URL)
-  : new Sequelize(
-      process.env.DB_NAME || '',
-      process.env.DB_USER || '',
-      process.env.DB_PASSWORD,
-      {
-        host: 'localhost',
-        dialect: 'postgres',
-        dialectOptions: {
-          decimalNumbers: true,
-        },
+export const authenticateToken = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const authHeader = req.headers.authorization;
+
+  if (authHeader) {
+    const token = authHeader.split(" ")[1];
+
+    const secretKey = process.env.JWT_SECRET_KEY || "";
+
+    jwt.verify(token, secretKey, (err, user) => {
+      if (err) {
+        return res.sendStatus(403); // Forbidden
       }
-    );
 
-export default sequelize;
+      req.user = user as JwtPayload;
+      return next();
+    });
+  } else {
+    res.sendStatus(401); // Unauthorized
+  }
+};

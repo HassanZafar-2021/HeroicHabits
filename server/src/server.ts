@@ -1,24 +1,20 @@
-import express, { Request, Response } from "express";
-import bodyParser from "body-parser";
-import * as cors from "cors";
-import apiRoutes from "./routes/api";
+const forceDatabaseRefresh = false;
+
+import express from "express";
+import sequelize from "./config/connection.js";
+import routes from "./routes/index.js";
 
 const app = express();
+const PORT = process.env.PORT || 3001;
 
-// Middleware
-app.use(bodyParser.json());
-app.use(cors()); // For handling cross-origin requests
+// Serves static files in the entire client's dist folder
+app.use(express.static("../client/dist"));
 
-// Use API routes
-app.use("/api", apiRoutes);
+app.use(express.json());
+app.use(routes);
 
-// Root route
-app.get("/", (_req: Request, res: Response) => {
-  res.send("Welcome to Heroic Habits API!");
-});
-
-// Start the server
-const PORT = process.env.PORT ?? 3000;
-app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
+sequelize.sync({ force: forceDatabaseRefresh }).then(() => {
+  app.listen(PORT, () => {
+    console.log(`Server is listening on port ${PORT}`);
+  });
 });
