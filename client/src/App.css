@@ -1,0 +1,183 @@
+/* Global Styles */
+:root {
+  --primary-color: #4caf50;
+  --secondary-color: #f44336;
+  --background-color: #f9f9f9;
+  --text-color: #333;
+  --font-family: "Arial", sans-serif;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-family);
+  background-color: var(--background-color);
+  color: var(--text-color);
+  line-height: 1.6;
+}
+
+a {
+  text-decoration: none;
+  color: var(--primary-color);
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* App Layout */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+header {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 20px;
+  text-align: center;
+}
+
+main {
+  flex: 1;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+footer {
+  background-color: var(--secondary-color);
+  color: white;
+  text-align: center;
+  padding: 10px;
+}
+
+/* Utility Classes */
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hidden {
+  display: none;
+}
+
+.button {
+  padding: 10px 20px;
+  font-size: 1rem;
+  color: white;
+  background-color: var(--primary-color);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.button:hover {
+  background-color: #388e3c;
+}
+
+.card {
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin: 10px;
+  max-width: 400px;
+  width: 100%;
+  text-align: center;
+}
+
+.card h2 {
+  margin: 0 0 10px;
+  color: var(--primary-color);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  header,
+  footer {
+    padding: 15px;
+  }
+
+  .button {
+    font-size: 0.9rem;
+    padding: 8px 16px;
+  }
+
+  .card {
+    margin: 10px auto;
+    padding: 15px;
+  }
+}
+
+/* Dashboard Components */
+.dashboard-container {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.avatar-container {
+  margin-top: 10px;
+}
+
+.streak-calendar-container,
+.progress-section,
+.quests-section {
+  margin-top: 20px;
+}
+
+.progress-bar {
+  background-color: #4caf50;
+  height: 20px;
+  border-radius: 5px;
+  text-align: center;
+  color: white;
+}
+
+/* Streak Calendar */
+.streak-calendar {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
+  gap: 10px;
+}
+
+.calendar-day {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 10px;
+  background-color: #f9f9f9;
+}
+
+.even-day {
+  background-color: #e0f7fa;
+}
+
+.odd-day {
+  background-color: #ffe0b2;
+}
+
+.status {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background-color: #ff7043;
+}
+
+.status.completed {
+  background-color: #66bb6a;
+}

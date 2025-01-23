@@ -1,14 +1,12 @@
 {
   "compilerOptions": {
-    "target": "es5",
-    "lib": ["dom", "es2015"],
-    "jsx": "react", // or "react-jsx" for React 17+
-    "module": "commonjs",
+    "target": "ES2020",
+    "module": "ESNext", // Ensures ES Modules syntax is used
     "moduleResolution": "node",
+    "esModuleInterop": true, // Ensures compatibility for common modules
     "strict": true,
-    "esModuleInterop": true,
-    "skipLibCheck": true,
+    "outDir": "./dist",
     "forceConsistentCasingInFileNames": true
   },
-  "include": ["src/**/*"]
+  "include": ["src"]
 }

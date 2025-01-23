@@ -1,31 +1,16 @@
-import type { Request, Response, NextFunction } from "express";
-import jwt from "jsonwebtoken";
+import { Sequelize } from "sequelize-typescript";
+import { User } from "../models/user";
+import { Quest } from "../models/Quest";
+import { Habit } from "../models/habits";
+import { UserQuest } from "../models/userquest";
 
-interface JwtPayload {
-  username: string;
-}
+const sequelize = new Sequelize({
+  dialect: "postgres",
+  host: process.env.DB_HOST,
+  username: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
+  models: [User, Quest, Habit, UserQuest], // Add your models here
+});
 
-export const authenticateToken = (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  const authHeader = req.headers.authorization;
-
-  if (authHeader) {
-    const token = authHeader.split(" ")[1];
-
-    const secretKey = process.env.JWT_SECRET_KEY || "";
-
-    jwt.verify(token, secretKey, (err, user) => {
-      if (err) {
-        return res.sendStatus(403); // Forbidden
-      }
-
-      req.user = user as JwtPayload;
-      return next();
-    });
-  } else {
-    res.sendStatus(401); // Unauthorized
-  }
-};
+export { sequelize };
