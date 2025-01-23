@@ -1,21 +1,16 @@
-import dotenv from 'dotenv';
-dotenv.config();
+import { Sequelize } from "sequelize-typescript";
+import { User } from "../models/user";
+import { Quest } from "../models/Quest";
+import { Habit } from "../models/habits";
+import { UserQuest } from "../models/userquest";
 
-import { Sequelize } from 'sequelize';
+const sequelize = new Sequelize({
+  dialect: "postgres",
+  host: process.env.DB_HOST,
+  username: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
+  models: [User, Quest, Habit, UserQuest], // Add your models here
+});
 
-const sequelize = process.env.DB_URL
-  ? new Sequelize(process.env.DB_URL)
-  : new Sequelize(
-      process.env.DB_NAME || '',
-      process.env.DB_USER || '',
-      process.env.DB_PASSWORD,
-      {
-        host: 'localhost',
-        dialect: 'postgres',
-        dialectOptions: {
-          decimalNumbers: true,
-        },
-      }
-    );
-
-export default sequelize;
+export { sequelize };

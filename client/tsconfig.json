@@ -1,25 +1,30 @@
 {
   "compilerOptions": {
-    "target": "ES2020",
-    "useDefineForClassFields": true,
-    "lib": ["ES2020", "DOM", "DOM.Iterable"],
-    "module": "ESNext",
-    "skipLibCheck": true,
+    "target": "ES2020" /* Modern JavaScript for better performance */,
+    "useDefineForClassFields": true /* Ensures class fields are emitted correctly */,
+    "lib": [
+      "ES2020",
+      "DOM",
+      "DOM.Iterable"
+    ] /* Add necessary libraries for ES and DOM features */,
+    "module": "ESNext" /* ESNext for module system to leverage modern module features */,
+    "skipLibCheck": true /* Skip type-checking for library files (improves build time) */,
+    "forceConsistentCasingInFileNames": true /* Ensures consistent casing in imports */,
+    "moduleResolution": "node" /* Node module resolution for compatibility */,
+    "allowImportingTsExtensions": true /* Allows importing .ts files directly (useful for some setups) */,
+    "resolveJsonModule": true /* Allows importing JSON files as modules */,
+    "isolatedModules": true /* Ensures each file is treated as an isolated module */,
+    "noEmit": true /* Don't emit any output files during compilation (useful in bundler environments) */,
+    "jsx": "react-jsx" /* React JSX transformation (for React 17+) */,
 
-    /* Bundler mode */
-    "moduleResolution": "bundler",
-    "allowImportingTsExtensions": true,
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noEmit": true,
-    "jsx": "react-jsx",
-
-    /* Linting */
-    "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
+    /* Linting / Type-checking */
+    "strict": true /* Enables strict type-checking */,
+    "noUnusedLocals": true /* Ensures no unused locals in the code */,
+    "noUnusedParameters": true /* Ensures no unused parameters in the code */,
+    "noFallthroughCasesInSwitch": true /* Prevents fall-through in switch statements */
   },
-  "include": ["src"],
-  "references": [{ "path": "./tsconfig.node.json" }]
+  "include": ["src"] /* Include the src directory */,
+  "references": [
+    { "path": "./tsconfig.node.json" }
+  ] /* Reference to another tsconfig (if you have one for Node.js) */
 }
