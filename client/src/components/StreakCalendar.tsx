@@ -1,11 +1,8 @@
-import React from "react";
-import "../index.css";
 interface StreakCalendarProps {
   streakDuration: number;
 }
 
-const StreakCalendar: React.FC<StreakCalendarProps> = ({ streakDuration }) => {
-  // Generate an array of dates for the streak duration
+const StreakCalendar: React.FC<StreakCalendarProps> = ({ streakDuration }: StreakCalendarProps) => {
   const streakDays = Array.from(
     { length: streakDuration },
     (_, index) => index + 1
@@ -20,7 +17,6 @@ const StreakCalendar: React.FC<StreakCalendarProps> = ({ streakDuration }) => {
           title={`Day ${day}`}
         >
           <div className="calendar-day-number">{day}</div>
-          {/* Can add a conditional to show completion status */}
           <div
             className={`status ${
               Math.random() > 0.5 ? "completed" : "not-completed"
