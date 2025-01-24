@@ -25,7 +25,7 @@ export const authenticateToken = (
   if (authHeader) {
     const token = authHeader.split(" ")[1]; // Extract the token from the header
 
-    const secretKey = process.env.JWT_SECRET_KEY || ""; // Ensure you have a fallback value for the secret key
+    const secretKey = process.env.JWT_SECRET_KEY ?? ""; // Ensure you have a fallback value for the secret key
 
     jwt.verify(token, secretKey, (err, user) => {
       if (err) {

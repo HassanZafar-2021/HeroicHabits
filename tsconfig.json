@@ -42,7 +42,7 @@
   },
 
   /* Includes and Excludes */
-  "include": ["src/**/*"],
+  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.js", "src/**/*.jsx"],
 
   "exclude": ["node_modules"] /* Exclude 'node_modules' from being compiled */
 }
