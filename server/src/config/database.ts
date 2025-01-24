@@ -1,18 +1,39 @@
 import { Sequelize } from "sequelize";
+import dotenv from "dotenv";
 
-// It's good practice to ensure all environment variables are loaded correctly
+dotenv.config(); // Load environment variables
+
+// Validate environment variables
+const requiredEnvVars = [
+  "DB_NAME",
+  "DB_USER",
+  "DB_PASSWORD",
+  "DB_HOST",
+  "NODE_ENV",
+];
+requiredEnvVars.forEach((varName) => {
+  if (!process.env[varName]) {
+    throw new Error(`Environment variable ${varName} is missing`);
+  }
+});
+
+// Log environment variables for debugging
+console.log("DB_NAME:", process.env.DB_NAME);
+console.log("DB_USER:", process.env.DB_USER);
+console.log("DB_PASSWORD:", process.env.DB_PASSWORD);
+
+// Initialize Sequelize
 const sequelize = new Sequelize(
-  process.env.DB_NAME || "heroic_habits", // Default DB name
-  process.env.DB_USER || "postgres", // Default user
-  process.env.DB_PASSWORD || "Luigi3301", // Default password (use environment variables in production!)
+  process.env.DB_NAME!, // Use non-null assertion for required environment variables
+  process.env.DB_USER!,
+  process.env.DB_PASSWORD,
   {
-    host: process.env.DB_HOST || "localhost", // Host address, default to localhost
-    dialect: "postgres", // Database dialect (PostgreSQL in your case)
-    logging: process.env.NODE_ENV === "development", // Enable logging only in development
+    host: process.env.DB_HOST || "localhost",
+    dialect: "postgres",
+    logging: process.env.NODE_ENV === "development", // Enable logging in development
     define: {
-      timestamps: false, // Disable timestamps by default (you can modify this per model)
+      timestamps: false, // Disable timestamps globally
     },
-    // If you're in production, you may want to configure pool settings and SSL options
     pool: {
       max: 5,
       min: 0,
@@ -22,7 +43,7 @@ const sequelize = new Sequelize(
   }
 );
 
-// Try to authenticate and log success/failure
+// Test database connection
 sequelize
   .authenticate()
   .then(() => {
@@ -30,6 +51,27 @@ sequelize
   })
   .catch((err) => {
     console.error("Unable to connect to the database:", err);
+  });
+
+// Manually initialize models
+import { initUserModel } from "../models/User";
+import { initQuestModel } from "../models/Quest";
+import { initHabitModel } from "../models/habits";
+import { initUserQuestModel } from "../models/userquest";
+
+initUserModel(sequelize);
+initQuestModel(sequelize);
+initHabitModel(sequelize);
+initUserQuestModel(sequelize);
+
+// Sync the database (force: true for development, false for production)
+sequelize
+  .sync({ force: process.env.NODE_ENV === "development" })
+  .then(() => {
+    console.log("Database synced!");
+  })
+  .catch((err) => {
+    console.error("Error syncing the database:", err);
   });
 
 export default sequelize;
