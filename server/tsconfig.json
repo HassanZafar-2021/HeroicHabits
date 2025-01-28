@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "ES2020",
+    "target": "ES2022",
     "module": "ESNext", // Ensures ES Modules syntax is used
     "moduleResolution": "node",
     "esModuleInterop": true, // Ensures compatibility for common modules

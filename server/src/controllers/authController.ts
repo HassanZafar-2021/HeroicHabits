@@ -3,9 +3,9 @@ import jwt, { JwtPayload } from "jsonwebtoken";
 
 // Augment the Express Request interface to include `user`
 declare module "express-serve-static-core" {
-  interface Request {
-    user?: JwtPayload;
-  }
+  // interface Request {
+  //   user?: JwtPayload;
+  // }
 }
 
 // Token verification middleware
@@ -20,13 +20,13 @@ export const verifyToken = (
     return res.status(403).json({ message: "No token provided" });
   }
 
-  jwt.verify(token, process.env.JWT_SECRET || "secretKey", (err, decoded) => {
+  jwt.verify(token, process.env.JWT_SECRET ?? "secretKey", (err, decoded) => {
     if (err) {
       return res.status(401).json({ message: "Invalid or expired token" });
     }
 
     // Attach user info to the request object
-    req.user = decoded as JwtPayload;
+    // req.user = decoded as JwtPayload;
     next();
   });
 };
