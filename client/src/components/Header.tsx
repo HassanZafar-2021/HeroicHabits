@@ -14,6 +14,9 @@ const Header: FC<HeaderProps> = ({ userName, avatarUrl }) => {
           <i className="fa-solid fa-gamepad text-blue-600 text-2xl"></i>
           <h1 className="text-xl font-bold text-blue-800">Heroic Habits</h1>
         </div>
+        <div className="hidden md:flex items-center space-x-2">
+          <span className="text-blue-700 font-semibold">{userName}</span>
+        </div>
         <nav className="hidden md:flex space-x-8">
           <span className="text-blue-700 hover:text-blue-500 cursor-pointer">
             Dashboard
