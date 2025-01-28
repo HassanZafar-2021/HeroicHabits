@@ -14,7 +14,7 @@ router.get("/quests", async (req, res, next) => {
 });
 
 // Update quest progress
-router.post(
+router.put(
   "/quests/:id/progress",
   [param("id").isInt().withMessage("ID must be an integer")],
   updateQuestProgress

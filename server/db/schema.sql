@@ -1,3 +1,12 @@
+-- DROP DATABASE (if exists, for reset purposes)
+DROP DATABASE IF EXISTS heroic_habits;
+
+-- CREATE DATABASE
+CREATE DATABASE heroic_habits;
+
+-- Switch to the new database (if running interactively)
+\c heroic_habits
+
 -- Create Users Table
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
@@ -19,23 +28,30 @@ CREATE TABLE quests (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
-/*
-note: change this code into sequalize typescript
-*/
+
 -- Create Habits Table
 CREATE TABLE habits (
     id SERIAL PRIMARY KEY,
     user_id INT REFERENCES users(id) ON DELETE CASCADE,
     habit_name VARCHAR(255) NOT NULL,
     description TEXT,
-    frequency VARCHAR(50),  -- Daily, Weekly, etc.
-    progress INT DEFAULT 0,  -- 0 to 100% progress
+    frequency VARCHAR(50),  -- e.g., 'Daily', 'Weekly'
+    progress INT DEFAULT 0 CHECK (progress >= 0 AND progress <= 100),
     is_active BOOLEAN DEFAULT TRUE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Create User-Quest Relationship Table
+-- Create Progress Table
+CREATE TABLE progress (
+    id SERIAL PRIMARY KEY,
+    habit_id INT REFERENCES habits(id) ON DELETE CASCADE,
+    progress INT DEFAULT 0 CHECK (progress >= 0 AND progress <= 100),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Create User-Quest Relationship Table (Optional: for many-to-many relationships)
 CREATE TABLE user_quests (
     user_id INT REFERENCES users(id) ON DELETE CASCADE,
     quest_id INT REFERENCES quests(id) ON DELETE CASCADE,
