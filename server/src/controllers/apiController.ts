@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { Quest } from "../models/Quest";
+import { Quest } from "../models/Quest.js";
 
 // Get all quests
 export const getQuests = async (req: Request, res: Response) => {
