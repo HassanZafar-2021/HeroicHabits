@@ -8,8 +8,8 @@ const requiredEnvVars = [
   "DB_NAME",
   "DB_USER",
   "DB_PASSWORD",
-  "DB_HOST",
-  "NODE_ENV",
+  //"DB_HOST",
+  //"NODE_ENV",
 ];
 requiredEnvVars.forEach((varName) => {
   if (!process.env[varName]) {
@@ -45,10 +45,10 @@ sequelize
   .catch((err) => console.error("Unable to connect to the database:", err));
 
 // Import and initialize models
-import { initUserModel } from "../models/User";
-import { initQuestModel } from "../models/Quest";
-import { initHabitModel } from "../models/habits";
-import { initUserQuestModel } from "../models/userquest";
+import { initUserModel } from "../models/User.js";
+import { initQuestModel } from "../models/Quest.js";
+import { initHabitModel } from "../models/habits.js";
+import { initUserQuestModel } from "../models/userquest.js";
 
 initUserModel(sequelize);
 initQuestModel(sequelize);

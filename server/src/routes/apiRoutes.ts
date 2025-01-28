@@ -1,5 +1,5 @@
 import express from "express";
-import { getQuests, updateQuestProgress } from "../controllers/apiController";
+import { getQuests, updateQuestProgress } from "../controllers/apiController.js";
 import { body, param } from "express-validator";
 
 const router = express.Router();

@@ -1,6 +1,6 @@
 import { Sequelize, DataTypes, Model, Optional } from "sequelize";
-import { User } from "./User";
-import { Quest } from "./Quest";
+import { User } from "./User.js";
+import { Quest } from "./Quest.js";
 
 // Define attributes
 interface UserQuestAttributes {

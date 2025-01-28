@@ -49,11 +49,11 @@ export function initQuestModel(sequelize: Sequelize) {
       user_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        references: {
-          model: "users", // Table name for the referenced model
-          key: "id",
-        },
-        onDelete: "CASCADE", // Ensure cascading deletes if a user is removed
+        // references: {
+        //   model: "users", // Table name for the referenced model
+        //   key: "id",
+        // },
+        // onDelete: "CASCADE", // Ensure cascading deletes if a user is removed
       },
       quest_name: {
         type: DataTypes.STRING,

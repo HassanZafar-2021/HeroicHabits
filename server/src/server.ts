@@ -1,10 +1,10 @@
 import express, { Express, Request, Response, NextFunction } from "express";
 import dotenv from "dotenv";
-import sequelize from "./config/connection"; // Import only sequelize
-import userRoutes from "./routes/userRoutes";
-import authRoutes from "./routes/authRoutes";
-import index from "./routes/index";
-import apiRoutes from "./routes/apiRoutes";
+import sequelize from "./config/connection.js"; // Import only sequelize
+import userRoutes from "./routes/userRoutes.js";
+import authRoutes from "./routes/authRoutes.js";
+import index from "./routes/index.js";
+import apiRoutes from "./routes/apiRoutes.js";
 import morgan from "morgan";
 import helmet from "helmet";
 import cors from "cors";
@@ -19,7 +19,7 @@ if (!process.env.JWT_SECRET_KEY) {
 
 const app: Express = express();
 const PORT = process.env.PORT || 5000;
-
+app.use(express.static("../client/dist"))
 // Middleware setup
 app.use(express.json());
 app.use(morgan("dev"));

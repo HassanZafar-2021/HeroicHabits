@@ -6,8 +6,8 @@
   "type": "module",
   "scripts": {
     "build": "npx tsc",
-    "start": "npm run build && node dist/server.js", 
-    "dev": "npx nodemon",  
+    "start": "npm run build && node dist/server.js",
+    "dev": "npx nodemon",
     "test": "echo \"Error: no test specified\" && exit 1",
     "seed": "node dist/seeds/index.js"
   },
@@ -22,8 +22,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
+    "helmet": "^8.0.0",
+    "morgan": "^1.10.0",
     "pg": "^8.12.0",
     "sequelize": "^6.37.3"
   },
