@@ -27,6 +27,12 @@ export interface Challenge {
   };
   official: boolean;
 }
+export interface Task {
+    id: string;          // Task ID
+    text: string;        // Task title
+    type: string;        // Task type (e.g., "todo", "daily", "habit")
+    completed?: boolean; // Optional: Task completion status
+}
 
 export interface CreateChallengeResponse {
   data: {
