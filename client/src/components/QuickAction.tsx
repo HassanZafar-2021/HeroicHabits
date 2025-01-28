@@ -1,21 +1,25 @@
 const QuickActions: React.FC = () => {
   const actions = [
     {
+      id: "new-task",
       icon: "fa-plus-circle",
       title: "New Task",
       description: "Create a new daily quest",
     },
     {
+      id: "budget",
       icon: "fa-coins",
       title: "Budget",
       description: "Set daily spending limits",
     },
     {
+      id: "progress",
       icon: "fa-chart-line",
       title: "Progress",
       description: "View your journey stats",
     },
     {
+      id: "achievements",
       icon: "fa-trophy",
       title: "Achievements",
       description: "Check your badges",
@@ -25,12 +29,10 @@ const QuickActions: React.FC = () => {
   return (
     <section className="py-16 bg-white">
       <div className="container mx-auto px-6">
-        <h3 className="text-2xl font-bold text-blue-800 mb-8">Quick Actions</h3>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-          {actions.map((action, index) => (
+          {actions.map((action) => (
             <div
-              key={index}
-              className="p-6 rounded-xl bg-blue-50 hover:bg-blue-100 transition-colors"
+              key={action.id}
             >
               <i
                 className={`fa-solid ${action.icon} text-blue-600 text-3xl mb-4`}

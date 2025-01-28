@@ -31,8 +31,8 @@ const Quests: React.FC = () => {
         Your Active Quests
       </h3>
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {quests.map((quest, index) => (
-          <QuestCard key={index} {...quest} />
+        {quests.map((quest) => (
+          <QuestCard key={quest.title} {...quest} />
         ))}
       </div>
     </section>
