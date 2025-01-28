@@ -9,10 +9,17 @@ const habitica = new HabiticaClient(userId, apiToken);
 
 // Example: Create a new challenge
 habitica
-  .createChallenge("My New Challenge", "new-challenge", 100, "public", "guild")
-  .then((response) => {
-    console.log("Challenge created successfully:", response.data);
+  .createChallenge(
+    "group-id",
+    "Challenge Name",
+    "short-name",
+    "Summary of the challenge",
+    "Detailed description",
+    50,
+    false
+  )
+  .then((challenge) => {
+    console.log("Challenge created:", challenge);
+    // Update UI with challenge details
   })
-  .catch((error) => {
-    console.error("Error creating challenge:", error);
-  });
+  .catch((error) => console.error("Failed to create challenge:", error));
