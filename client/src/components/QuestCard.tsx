@@ -1,6 +1,4 @@
 // QuestCard.tsx
-import React from "react";
-
 interface QuestCardProps {
   title: string;
   description: string;

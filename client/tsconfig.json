@@ -10,7 +10,7 @@
     "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "noEmit": false, // Ensure that the output files are emitted
+    "noEmit": true, // Ensure that the output files are not emitted
     "jsx": "react-jsx",
     "outDir": "./build", // Specify the output directory for compiled JS files
     "strict": true,

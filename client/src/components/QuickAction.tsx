@@ -1,5 +1,3 @@
-import React from "react";
-
 const QuickActions: React.FC = () => {
   const actions = [
     {

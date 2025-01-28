@@ -3,9 +3,9 @@ import jwt, { JwtPayload } from "jsonwebtoken";
 
 // Augment the Express Request interface to include `user`
 declare module "express-serve-static-core" {
-  interface Request {
-    user?: JwtPayload;
-  }
+  // interface Request {
+  //   user?: JwtPayload;
+  // }
 }
 
 // Token verification middleware
@@ -26,7 +26,7 @@ export const verifyToken = (
     }
 
     // Attach user info to the request object
-    req.user = decoded as JwtPayload;
+    // req.user = decoded as JwtPayload;
     next();
   });
 };
