@@ -1,8 +1,8 @@
 import axios from "axios";
-
-const HABITICA_API_URL = "https://habitica.com/api/v3/challenges"; // Base URL for Habitica API
-const API_KEY = "your-api-key"; // Replace with your Habitica API key
-const USER_ID = "your-user-id"; // Replace with your Habitica user ID
+import dotenv from "dotenv";
+const HABITICA_API_URL = process.env.HABITICA_API_URL;
+const API_KEY = process.env.API_KEY;
+const USER_ID = process.env.USER_ID;
 
 // Function to delete a challenge
 const deleteChallenge = async (challengeId: string) => {

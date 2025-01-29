@@ -19,7 +19,7 @@ if (!process.env.JWT_SECRET_KEY) {
 
 const app: Express = express();
 const PORT = process.env.PORT || 5000;
-app.use(express.static("../client/dist"))
+app.use(express.static("../client/dist"));
 // Middleware setup
 app.use(express.json());
 app.use(morgan("dev"));
@@ -55,7 +55,7 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 
 // Start the server
 const server = app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  console.log(`Server running on port http://localhost:${PORT}`);
 });
 
 // Graceful shutdown
