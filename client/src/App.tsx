@@ -4,7 +4,7 @@ import Quests from "./components/Quest";
 import QuickActions from "./components/QuickAction";
 import Footer from "./components/Footer";
 import CreateChallengeForm from "./components/CreateChallengeForm";
-import HabiticaClient from "../../Habitica/HabiticaClient";
+import HabiticaClient from "../../Habitica/src/HabiticaClient";
 import "./App.css"; // Import global styles
 
 const App: React.FC = () => {
