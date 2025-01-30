@@ -1,13 +1,16 @@
 # HeroicHabits
 
+## Deployed
+
+https://heroichabits-1.onrender.com/
+
 ## Description
 
 Heroic Habits turns habit-building into an engaging adventure where users become the hero of their own story. By creating a personalized profile and hero avatar, users transform daily routines into quests and track their progress through a visually immersive journey. With its unique quest system and storytelling elements, Heroic Habits makes self-improvement fun and motivating.
 
 ## Table of Contents (Optional)
 
-If your README is long, add a table of contents to make it easy for users to find what they need.
-
+- [Deployed](#deployed)
 - [Description](#description)
 - [Installation](#installation)
 - [Usage](#usage)
@@ -19,21 +22,43 @@ If your README is long, add a table of contents to make it easy for users to fin
 
 ## Installation
 
-Clone the repository and navigate into the project directory.
+Clone the Repository
 
-Set up the frontend by initializing a Vite project with React and TypeScript, then run npm install to install dependencies.
+git clone https://github.com/HassanZafar-2021/HeroicHabits.git
+cd HeroicHabits
+Set Up the Server
 
-Set up the backend by creating a server folder, initializing it with npm init -y, and installing Express and TypeScript dependencies.
+cd server
+npm init -y
+npm install
+cp .env.example .env
+Update .env with database credentials
+Configure the Database
 
-Organize the backend by creating folders for controllers, models, config, API, and routes inside the server folder.
+Ensure PostgreSQL is installed
+Create database: psql -U postgres -c "CREATE DATABASE heroic_habits;"
+Configure database settings in .env
+Run migrations: npx sequelize-cli db:migrate
+Verify connection with npx sequelize-cli db:seed:all (if applicable)
+Set Up the Client
 
-Run the frontend using npm run dev in the client folder and the backend with npx ts-node src/index.ts in the server folder.
+Navigate to project root
+npm create vite@latest client --template react-ts
+cd client
+npm install
+Configure environment variables
+Run the Project
+
+Start backend: cd ../server && npm run dev
+Start frontend: cd ../client && npm run dev
+Open browser and visit http://localhost:5173
+Ensure backend is running at http://localhost:5000
+Debug any startup issues if needed
 
 ## Usage
 
-    ```md
-    ![alt text](assets/images/screenshot.png)
-    ```
+![alt text](image.png)
+![alt text](image-1.png)
 
 ## Credits
 
