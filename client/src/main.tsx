@@ -7,35 +7,20 @@ import ForestFocus from "./pages/ForestFocus.tsx";
 import ProgressPage from "./pages/ProgressPage.tsx";
 import PeakPerformance from "./pages/PeakPerformance.tsx";
 import Login from "./pages/UserLogin.tsx";
-import Home from "./pages/Home.tsx"; // Ensure this is defined
-import ErrorPage from "./pages/ErrorPage.tsx"; // Ensure this is defined
+import Dashboard from "./components/Dashboard.tsx";
+import ErrorPage from "./pages/ErrorPage.tsx";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App />, // Main layout component
-    errorElement: <ErrorPage />, // Handle errors
+    element: <App />, // App should contain <Outlet /> for nested routes to work
+    errorElement: <ErrorPage />,
     children: [
-      {
-        index: true,
-        element: <Home />, // Home component
-      },
-      {
-        path: "login", // Changed from "/login" to "login"
-        element: <Login />,
-      },
-      {
-        path: "progress", // Added missing route
-        element: <ProgressPage />,
-      },
-      {
-        path: "forestfocus", // Added missing route
-        element: <ForestFocus />,
-      },
-      {
-        path: "peakperformance", // Added missing route
-        element: <PeakPerformance />,
-      },
+      { index: true, element: <Dashboard userName="JohnDoe" avatarUrl="avatar.png" quests={[]} /> },
+      { path: "login", element: <Login /> },
+      { path: "progress", element: <ProgressPage /> },
+      { path: "forestfocus", element: <ForestFocus /> },
+      { path: "peakperformance", element: <PeakPerformance /> },
     ],
   },
 ]);
