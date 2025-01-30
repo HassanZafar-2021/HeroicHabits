@@ -1,5 +1,5 @@
-
-<html class="">
+<!DOCTYPE html>
+<html lang="en">
               
 <head>
   <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
@@ -587,10 +587,10 @@
               <h1 class="text-xl font-bold text-blue-800">Heroic Habits</h1>
           </div>
           <nav class="hidden md:flex space-x-8">
-              <span class="text-blue-700 hover:text-blue-500 cursor-pointer">Dashboard</span>
-              <span class="text-blue-700 hover:text-blue-500 cursor-pointer">Tasks</span>
-              <span class="text-blue-700 hover:text-blue-500 cursor-pointer">Progress</span>
-              <span class="text-blue-700 hover:text-blue-500 cursor-pointer">Settings</span>
+            <a href="index.html" class="text-blue-700 hover:text-blue-500 cursor-pointer">Dashboard</a>            <nav class="hidden md:flex space-x-8"></nav>
+            <span class="text-blue-700 hover:text-blue-500 cursor-pointer" onclick="location.href='progressPage.html'">Progress</span>
+        </nav>
+        <div class="flex items-center space-x-4">
           </nav>
           <div class="flex items-center space-x-4">
               <button class="text-blue-700 hover:text-blue-500">
@@ -706,17 +706,8 @@
           <div>
               <h5 class="font-bold mb-4">Features</h5>
               <ul class="space-y-2">
-                  <li><span class="hover:text-blue-300 cursor-pointer">Dashboard</span></li>
-                  <li><span class="hover:text-blue-300 cursor-pointer">Tasks</span></li>
-                  <li><span class="hover:text-blue-300 cursor-pointer">Progress</span></li>
-              </ul>
-          </div>
-          <div>
-              <h5 class="font-bold mb-4">Support</h5>
-              <ul class="space-y-2">
-                  <li><span class="hover:text-blue-300 cursor-pointer">Help Center</span></li>
-                  <li><span class="hover:text-blue-300 cursor-pointer">Community</span></li>
-                  <li><span class="hover:text-blue-300 cursor-pointer">Contact</span></li>
+                <li><span class="hover:text-blue-300 cursor-pointer" onclick="location.href='index.html'">Dashboard</span></li>
+                <li><span class="hover:text-blue-300 cursor-pointer" onclick="location.href='progressPage.html'">Progress</span></li>
               </ul>
           </div>
           <div>
