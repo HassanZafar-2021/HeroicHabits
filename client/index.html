@@ -582,11 +582,6 @@
   </head>
 
   <body class="h-full text-base-content">
-    <iframe
-      src="https://pixe.la/v1/users/a-know/graphs/test-graph"
-      style="height: 200px; width: 300px"
-      title="Iframe Example"
-    ></iframe>
     <div id="root"></div>
     <div id="main-container" class="bg-gradient-to-b from-yellow-50 to-blue-50">
       <header
@@ -600,18 +595,10 @@
               <h1 class="text-xl font-bold text-blue-800">Heroic Habits</h1>
             </div>
             <nav class="hidden md:flex space-x-8">
-              <span class="text-blue-700 hover:text-blue-500 cursor-pointer"
-                >Dashboard</span
-              >
-              <span class="text-blue-700 hover:text-blue-500 cursor-pointer"
-                >Tasks</span
-              >
-              <span class="text-blue-700 hover:text-blue-500 cursor-pointer"
-                >Progress</span
-              >
-              <span class="text-blue-700 hover:text-blue-500 cursor-pointer"
-                >Settings</span
-              >
+              <a href="index.html" class="text-blue-700 hover:text-blue-500 cursor-pointer">Dashboard</a>            <nav class="hidden md:flex space-x-8"></nav>
+                    <span class="text-blue-700 hover:text-blue-500 cursor-pointer" onclick="location.href='progressPage.html'">Progress</span>
+                </nav>
+                <div class="flex items-center space-x-4">
             </nav>
             <div class="flex items-center space-x-4">
               <button
@@ -640,21 +627,17 @@
             <h2 class="text-4xl font-bold text-white mb-6">
               Level Up Your Life
             </h2>
-            <p class="text-xl text-blue-50 mb-8">
+            <p class="text-xl text-gray-700 mb-8">
               Transform your daily habits into an epic adventure. Track,
               improve, and conquer your goals one quest at a time.
             </p>
             <div class="flex space-x-4">
-              <button
-                class="bg-yellow-500 hover:bg-yellow-600 text-white px-8 py-3 rounded-lg"
+              <a
+              href="userLogin.html"
+              class="bg-yellow-500 hover:bg-yellow-600 text-white px-8 py-3 rounded-lg"
               >
-                Start Your Journey
-              </button>
-              <button
-                class="bg-blue-600/20 hover:bg-blue-600/30 text-white px-8 py-3 rounded-lg backdrop-blur-sm"
-              >
-                Watch Tutorial
-              </button>
+              Start Your Journey
+              </a>
             </div>
           </div>
         </div>
@@ -672,13 +655,12 @@
               src="https://storage.googleapis.com/uxpilot-auth.appspot.com/21abd35af0-a38af54f0951f27fd82f.png"
               alt="pixel art forest scene with trees and mystical elements, 16-bit style"
             />
-            <div class="p-6">
+            <div class="p-6" onclick="location.href='forestFocus.html'">
               <h4 class="font-bold text-blue-800 mb-2">Forest of Focus</h4>
               <p class="text-blue-600 text-sm mb-4">
-                Complete daily meditation tasks
+                Take a moment to meditate and reflect
               </p>
               <div class="flex justify-between items-center">
-                <span class="text-blue-500">Progress: 7/10</span>
                 <i class="fa-solid fa-arrow-right text-blue-500"></i>
               </div>
             </div>
@@ -691,11 +673,10 @@
               src="https://storage.googleapis.com/uxpilot-auth.appspot.com/1acceabec3-38d674ae3a94cf57bab5.png"
               alt="pixel art mountain peaks with clouds, 16-bit style"
             />
-            <div class="p-6">
+            <div class="p-6" onclick="location.href='peakPerformance.html'">
               <h4 class="font-bold text-blue-800 mb-2">Peak Performance</h4>
-              <p class="text-blue-600 text-sm mb-4">Fitness goals tracking</p>
+              <p class="text-blue-600 text-sm mb-4">Caloric goals tracking</p>
               <div class="flex justify-between items-center">
-                <span class="text-blue-500">Progress: 5/10</span>
                 <i class="fa-solid fa-arrow-right text-blue-500"></i>
               </div>
             </div>
@@ -709,10 +690,9 @@
               alt="pixel art crystal cave with glowing elements, 16-bit style"
             />
             <div class="p-6">
-              <h4 class="font-bold text-blue-800 mb-2">Crystal Clarity</h4>
-              <p class="text-blue-600 text-sm mb-4">Mind training exercises</p>
+              <h4 class="font-bold text-blue-800 mb-2">Task Taker</h4>
+              <p class="text-blue-600 text-sm mb-4">Create your daily quest goals (coming soon)</p>
               <div class="flex justify-between items-center">
-                <span class="text-blue-500">Progress: 3/10</span>
                 <i class="fa-solid fa-arrow-right text-blue-500"></i>
               </div>
             </div>
@@ -730,102 +710,54 @@
                 class="fa-solid fa-plus-circle text-blue-600 text-3xl mb-4"
               ></i>
               <h4 class="font-bold text-blue-800 mb-2">New Task</h4>
-              <p class="text-blue-600 text-sm">Create a new daily quest</p>
+              <p class="text-blue-600 text-sm">Create a new daily quest (coming soon)</p>
             </div>
             <div
               class="bg-yellow-50 p-6 rounded-xl hover:bg-yellow-100 transition-colors"
             >
               <i class="fa-solid fa-coins text-yellow-600 text-3xl mb-4"></i>
               <h4 class="font-bold text-yellow-800 mb-2">Budget</h4>
-              <p class="text-yellow-600 text-sm">Set daily spending limits</p>
+              <p class="text-yellow-600 text-sm">Set daily spending limits (coming soon)</p>
             </div>
             <div
-              class="bg-blue-50 p-6 rounded-xl hover:bg-blue-100 transition-colors"
+              class="bg-blue-50 p-6 rounded-xl hover:bg-blue-100 transition-colors" onclick="location.href='progressPage.html'"
             >
               <i class="fa-solid fa-chart-line text-blue-600 text-3xl mb-4"></i>
-              <h4 class="font-bold text-blue-800 mb-2">Progress</h4>
+                <h4 class="font-bold text-blue-800 mb-2 cursor-pointer">Progress</h4>
               <p class="text-blue-600 text-sm">View your journey stats</p>
-            </div>
-            <div
-              class="bg-yellow-50 p-6 rounded-xl hover:bg-yellow-100 transition-colors"
-            >
-              <i class="fa-solid fa-trophy text-yellow-600 text-3xl mb-4"></i>
-              <h4 class="font-bold text-yellow-800 mb-2">Achievements</h4>
-              <p class="text-yellow-600 text-sm">Check your badges</p>
             </div>
           </div>
         </div>
       </section>
       <footer id="footer" class="bg-blue-900 text-blue-100">
         <div class="container mx-auto px-6 py-12">
-          <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-            <div class="space-y-4">
-              <div class="flex items-center space-x-2">
-                <i class="fa-solid fa-gamepad text-blue-300 text-2xl"></i>
-                <h4 class="text-xl font-bold">Heroic Habits</h4>
-              </div>
-              <p class="text-blue-300">
-                Level up your life, one habit at a time.
-              </p>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="space-y-4">
+                    <div class="flex items-center space-x-2">
+                        <i class="fa-solid fa-gamepad text-blue-300 text-2xl"></i>
+                        <h4 class="text-xl font-bold">Heroic Habits</h4>
+                    </div>
+                    <p class="text-blue-300">Level up your life, one habit at a time.</p>
+                </div>
+                <div>
+                    <h5 class="font-bold mb-4">Features</h5>
+                    <ul class="space-y-2">
+                      <li><span class="hover:text-blue-300 cursor-pointer" onclick="location.href='index.html'">Dashboard</span></li>
+                      <li><span class="hover:text-blue-300 cursor-pointer" onclick="location.href='progressPage.html'">Progress</span></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="font-bold mb-4">Follow Us</h5>
+                    <div class="flex space-x-4">
+                        <span class="hover:text-blue-300 cursor-pointer"><i class="fa-brands fa-twitter text-xl"></i></span>
+                        <span class="hover:text-blue-300 cursor-pointer"><i class="fa-brands fa-discord text-xl"></i></span>
+                        <span class="hover:text-blue-300 cursor-pointer"><i class="fa-brands fa-instagram text-xl"></i></span>
+                    </div>
+                </div>
             </div>
-            <div>
-              <h5 class="font-bold mb-4">Features</h5>
-              <ul class="space-y-2">
-                <li>
-                  <span class="hover:text-blue-300 cursor-pointer"
-                    >Dashboard</span
-                  >
-                </li>
-                <li>
-                  <span class="hover:text-blue-300 cursor-pointer">Tasks</span>
-                </li>
-                <li>
-                  <span class="hover:text-blue-300 cursor-pointer"
-                    >Progress</span
-                  >
-                </li>
-              </ul>
+            <div class="border-t border-blue-800 mt-12 pt-8 text-center text-blue-400">
+                <p>© 2025 Heroic Habits. All rights reserved.</p>
             </div>
-            <div>
-              <h5 class="font-bold mb-4">Support</h5>
-              <ul class="space-y-2">
-                <li>
-                  <span class="hover:text-blue-300 cursor-pointer"
-                    >Help Center</span
-                  >
-                </li>
-                <li>
-                  <span class="hover:text-blue-300 cursor-pointer"
-                    >Community</span
-                  >
-                </li>
-                <li>
-                  <span class="hover:text-blue-300 cursor-pointer"
-                    >Contact</span
-                  >
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h5 class="font-bold mb-4">Follow Us</h5>
-              <div class="flex space-x-4">
-                <span class="hover:text-blue-300 cursor-pointer"
-                  ><i class="fa-brands fa-twitter text-xl"></i
-                ></span>
-                <span class="hover:text-blue-300 cursor-pointer"
-                  ><i class="fa-brands fa-discord text-xl"></i
-                ></span>
-                <span class="hover:text-blue-300 cursor-pointer"
-                  ><i class="fa-brands fa-instagram text-xl"></i
-                ></span>
-              </div>
-            </div>
-          </div>
-          <div
-            class="border-t border-blue-800 mt-12 pt-8 text-center text-blue-400"
-          >
-            <p>© 2025 Heroic Habits. All rights reserved.</p>
-          </div>
         </div>
       </footer>
     </div>
