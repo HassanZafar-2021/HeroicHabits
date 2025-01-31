@@ -1,25 +1,38 @@
 // app.ts
 import HabiticaClient from "./HabiticaClient";
+import { CreateChallengeResponse } from "./HabiticaTypes";
+import dotenv from "dotenv";
 
 // Your Habitica API credentials
-const userId = "YOUR_USER_ID";
-const apiToken = "YOUR_API_TOKEN";
+const userId = process.env.HABITICA_USER_ID as string;
+const apiToken = process.env.HABITICA_API_TOKEN as string;
+
+if (!userId || !apiToken) {
+  throw new Error(
+    "Habitica API credentials are not set in the environment variables."
+  );
+}
 
 const habitica = new HabiticaClient(userId, apiToken);
 
 // Example: Create a new challenge
-habitica
-  .createChallenge(
-    "group-id",
-    "Challenge Name",
-    "short-name",
-    "Summary of the challenge",
-    "Detailed description",
-    50,
-    false
-  )
-  .then((challenge) => {
-    console.log("Challenge created:", challenge);
-    // Update UI with challenge details
-  })
-  .catch((error) => console.error("Failed to create challenge:", error));
+const createChallenge = async () => {
+  try {
+    const challengeResponse = await habitica.createChallenge(
+      "group-id", // Replace with your group ID
+      "Heroic Challenge", // Challenge name
+      "heroic-challenge", // Short name
+      "Summary of the challenge", // Short summary
+      "This is the detailed description of the Heroic Challenge", // Full description
+      50, // Prize points or reward
+      false // Whether the challenge is official or not
+    );
+
+    const typedChallengeResponse = challengeResponse as CreateChallengeResponse;
+    console.log("Challenge created:", typedChallengeResponse.data);
+  } catch (error) {
+    console.error("Failed to create challenge:", error);
+  }
+};
+
+createChallenge();

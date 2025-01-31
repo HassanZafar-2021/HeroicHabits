@@ -1,5 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
+import { User } from "../models/User.js"; // Assuming you have a User model
+import bcrypt from "bcrypt";
 
 // Define a custom payload interface with userId
 interface CustomJwtPayload {
@@ -10,7 +12,7 @@ interface CustomJwtPayload {
 declare global {
   namespace Express {
     interface Request {
-      user?: CustomJwtPayload; // Attach custom payload type
+      user?: CustomJwtPayload;
     }
   }
 }
@@ -55,7 +57,36 @@ export const authenticateToken = (
     }
 
     req.user = payload; // Attach the validated payload to the request object
-
     next(); // Proceed to the next middleware/route handler
   });
+};
+
+// Login handler
+export const loginUser = async (req: Request, res: Response) => {
+  const { username, password } = req.body;
+
+  try {
+    // Find user by username
+    const user = await User.findOne({ where: { username } });
+    if (!user) {
+      return res.status(400).json({ message: "Invalid username or password" });
+    }
+
+    // Compare passwords
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid) {
+      return res.status(400).json({ message: "Invalid username or password" });
+    }
+
+    // Generate JWT token
+    const token = jwt.sign(
+      { userId: user.id }, // Attach userId to token
+      process.env.JWT_SECRET_KEY ?? "secretKey", // Fallback if not set in env
+      { expiresIn: "1h" }
+    );
+
+    res.status(200).json({ message: "Login successful", token });
+  } catch (error) {
+    res.status(500).json({ message: "Error logging in", error });
+  }
 };

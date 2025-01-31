@@ -8,8 +8,8 @@ const requiredEnvVars = [
   "DB_NAME",
   "DB_USER",
   "DB_PASSWORD",
-  //"DB_HOST",
-  //"NODE_ENV",
+  // "DB_HOST", // Make sure DB_HOST is validated if it's necessary
+  // "NODE_ENV", // Ensuring NODE_ENV is checked
 ];
 requiredEnvVars.forEach((varName) => {
   if (!process.env[varName]) {
@@ -27,7 +27,7 @@ const sequelize = new Sequelize(
     dialect: "postgres",
     logging: process.env.NODE_ENV === "development", // Enable logging only in development
     define: {
-      timestamps: false, // Disable automatic timestamps
+      timestamps: false, // Disable automatic timestamps if not needed
     },
     pool: {
       max: 5,
@@ -57,7 +57,7 @@ initUserQuestModel(sequelize);
 
 // Sync database
 sequelize
-  .sync({ force: process.env.NODE_ENV === "development" }) // Force sync only in development
+  .sync({ force: process.env.NODE_ENV === "development" }) // Sync only in development environment
   .then(() => console.log("Database synced successfully"))
   .catch((err) => console.error("Error syncing the database:", err));
 
