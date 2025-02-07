@@ -1,13 +1,12 @@
--- DROP DATABASE (if exists, for reset purposes)
+
 DROP DATABASE IF EXISTS heroic_habits;
 
--- CREATE DATABASE
+
 CREATE DATABASE heroic_habits;
 
--- Switch to the new database (if running interactively)
 \c heroic_habits
 
--- Create Users Table
+Create Users Table
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
     username VARCHAR(100) UNIQUE NOT NULL,
@@ -51,7 +50,6 @@ CREATE TABLE progress (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Create User-Quest Relationship Table (Optional: for many-to-many relationships)
 CREATE TABLE user_quests (
     user_id INT REFERENCES users(id) ON DELETE CASCADE,
     quest_id INT REFERENCES quests(id) ON DELETE CASCADE,

@@ -1,92 +1,41 @@
 import { Request, Response, NextFunction } from "express";
-import jwt from "jsonwebtoken";
-import { User } from "../models/User.js"; // Assuming you have a User model
-import bcrypt from "bcrypt";
+import jwt, { JwtPayload } from "jsonwebtoken";
 
-// Define a custom payload interface with userId
-interface CustomJwtPayload {
-  userId: string;
+// Define a custom interface for authenticated requests
+interface AuthenticatedRequest extends Request {
+  user?: { id: number; username: string };
 }
 
-// Augment Express Request interface to include 'user' property of type CustomJwtPayload
-declare global {
-  namespace Express {
-    interface Request {
-      user?: CustomJwtPayload;
-    }
-  }
-}
-
-// Middleware for token verification
+// Middleware to authenticate JWT
 export const authenticateToken = (
-  req: Request,
+  req: AuthenticatedRequest, // Use the custom interface
   res: Response,
   next: NextFunction
 ) => {
   const authHeader = req.headers.authorization;
 
   if (!authHeader) {
-    return res.status(401).json({ message: "Authorization header missing" });
+    return res.sendStatus(401); // No token provided
   }
 
-  const token = authHeader.split(" ")[1]; // Extract the token from the header
-
-  if (!token) {
-    return res
-      .status(401)
-      .json({ message: "Token missing from authorization header" });
-  }
-
-  const secretKey = process.env.JWT_SECRET_KEY;
-
-  if (!secretKey) {
-    throw new Error("JWT_SECRET_KEY is not defined in environment variables");
-  }
+  const token = authHeader.split(" ")[1];
+  const secretKey = process.env.JWT_SECRET_KEY || "";
 
   jwt.verify(token, secretKey, (err, decoded) => {
     if (err) {
-      return res.status(403).json({ message: "Invalid or expired token" }); // Forbidden if token verification fails
+      return res.sendStatus(403); // Invalid token
     }
 
-    // Explicitly cast decoded token to CustomJwtPayload
-    const payload = decoded as CustomJwtPayload;
+    const payload = decoded as JwtPayload & { username: string };
 
-    // Validate required properties
-    if (!payload.userId) {
-      return res.status(403).json({ message: "Invalid token payload" });
+    if (!payload.username) {
+      return res.sendStatus(403);
     }
 
-    req.user = payload; // Attach the validated payload to the request object
-    next(); // Proceed to the next middleware/route handler
+    // Assigning user with default id 0 (Modify logic to use real id)
+    req.user = { id: 0, username: payload.username };
+    next();
   });
 };
 
-// Login handler
-export const loginUser = async (req: Request, res: Response) => {
-  const { username, password } = req.body;
-
-  try {
-    // Find user by username
-    const user = await User.findOne({ where: { username } });
-    if (!user) {
-      return res.status(400).json({ message: "Invalid username or password" });
-    }
-
-    // Compare passwords
-    const isPasswordValid = await bcrypt.compare(password, user.password);
-    if (!isPasswordValid) {
-      return res.status(400).json({ message: "Invalid username or password" });
-    }
-
-    // Generate JWT token
-    const token = jwt.sign(
-      { userId: user.id }, // Attach userId to token
-      process.env.JWT_SECRET_KEY ?? "secretKey", // Fallback if not set in env
-      { expiresIn: "1h" }
-    );
-
-    res.status(200).json({ message: "Login successful", token });
-  } catch (error) {
-    res.status(500).json({ message: "Error logging in", error });
-  }
-};
+export default authenticateToken;

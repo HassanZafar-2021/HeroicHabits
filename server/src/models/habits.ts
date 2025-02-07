@@ -6,14 +6,13 @@ interface HabitAttributes {
   user_id: number;
   habit_name: string;
   description?: string;
-  frequency: string; // e.g., Daily, Weekly
-  progress: number; // 0 to 100%
+  frequency: string; 
+  progress: number; 
   is_active: boolean;
   createdAt?: Date;
   updatedAt?: Date;
 }
 
-// Define optional fields for creation
 type HabitCreationAttributes = Optional<
   HabitAttributes,
   "id" | "description" | "progress" | "is_active" | "createdAt" | "updatedAt"
@@ -47,7 +46,7 @@ export function initHabitModel(sequelize: Sequelize) {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-          model: "users", // Table name for the referenced model
+          model: "users", 
           key: "id",
         },
         onDelete: "CASCADE",
@@ -64,7 +63,7 @@ export function initHabitModel(sequelize: Sequelize) {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
-          isIn: [["Daily", "Weekly", "Monthly"]], // Ensure valid frequency values
+          isIn: [["Daily", "Weekly", "Monthly"]], 
         },
       },
       progress: {
@@ -73,21 +72,21 @@ export function initHabitModel(sequelize: Sequelize) {
         defaultValue: 0,
         validate: {
           min: 0,
-          max: 100, // Ensure progress stays within range
+          max: 100, 
         },
       },
       is_active: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
-        defaultValue: true, // Default to active
+        defaultValue: true, 
       },
     },
     {
       sequelize,
       modelName: "Habit",
       tableName: "habits",
-      timestamps: true, // Automatically manages createdAt and updatedAt
-      underscored: true, // Use snake_case column naming
+      timestamps: true, 
+      underscored: true, 
     }
   );
 }

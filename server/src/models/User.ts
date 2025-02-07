@@ -62,8 +62,10 @@ export function initUserModel(sequelize: Sequelize) {
       sequelize,
       modelName: "User",
       tableName: "users",
-      timestamps: true, // Automatically add created_at and updated_at
-      underscored: true, // Use snake_case for column names
+      timestamps: true, 
+      underscored: true, 
     }
   );
 }
+
+export default User;
