@@ -10,9 +10,12 @@ import cors from "cors";
 dotenv.config();
 
 // Validate required environment variables
-if (!process.env.JWT_SECRET_KEY) {
-  throw new Error("JWT_SECRET_KEY is missing in environment variables.");
-}
+const requiredEnvVars = ["JWT_SECRET_KEY", "DB_NAME", "DB_USER", "DB_PASSWORD"];
+requiredEnvVars.forEach((varName) => {
+  if (!process.env[varName]) {
+    throw new Error(`${varName} is missing in environment variables.`);
+  }
+});
 
 const app: Express = express();
 const PORT = process.env.PORT || 5000;
@@ -28,15 +31,15 @@ app.use(cors());
 sequelize
   .sync({ force: process.env.NODE_ENV === "development" })
   .then(() => console.log("Database synced!"))
-  .catch((err) => console.error("Error syncing the database", err));
+  .catch((err) => console.error("Error syncing the database:", err));
 
 // Routes
 app.use("/api", routes);
 
 // Centralized error handling
-app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+app.use((err: any, req: Request, res: Response, next: NextFunction) => {
   console.error(err.stack);
-  const statusCode = (err as any).statusCode || 500;
+  const statusCode = err.statusCode || 500;
   res.status(statusCode).json({
     message:
       process.env.NODE_ENV === "production"
@@ -65,6 +68,8 @@ const gracefulShutdown = (signal: string) => {
 ["SIGTERM", "SIGINT"].forEach((signal) =>
   process.on(signal, () => gracefulShutdown(signal))
 );
+
+// Unhandled Rejection and Uncaught Exception
 process.on("unhandledRejection", (reason, promise) => {
   console.error("Unhandled Rejection:", promise, "reason:", reason);
   process.exit(1);

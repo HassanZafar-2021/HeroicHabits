@@ -1,6 +1,7 @@
 import express from "express";
-import type { Request, Response } from "express";
+import { Request, Response } from "express";
 import { User } from "../models/index";
+import { ValidationError } from "sequelize"; // Optional, if using Sequelize validation
 
 const router = express.Router();
 
@@ -11,8 +12,12 @@ router.get("/", async (_req: Request, res: Response) => {
       attributes: { exclude: ["password"] },
     });
     res.json(users);
-  } catch (error: any) {
-    res.status(500).json({ message: error.message });
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      res.status(500).json({ message: error.message });
+    } else {
+      res.status(500).json({ message: "An unknown error occurred" });
+    }
   }
 });
 
@@ -28,8 +33,12 @@ router.get("/:id", async (req: Request, res: Response) => {
     } else {
       res.status(404).json({ message: "User not found" });
     }
-  } catch (error: any) {
-    res.status(500).json({ message: error.message });
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      res.status(500).json({ message: error.message });
+    } else {
+      res.status(500).json({ message: "An unknown error occurred" });
+    }
   }
 });
 
@@ -37,10 +46,21 @@ router.get("/:id", async (req: Request, res: Response) => {
 router.post("/", async (req: Request, res: Response) => {
   const { username, email, password } = req.body;
   try {
+    // Ensure valid inputs (basic example)
+    if (!username || !email || !password) {
+      return res.status(400).json({ message: "All fields are required" });
+    }
+
     const newUser = await User.create({ username, email, password });
     res.status(201).json(newUser);
-  } catch (error: any) {
-    res.status(400).json({ message: error.message });
+  } catch (error: unknown) {
+    if (error instanceof ValidationError) {
+      res.status(400).json({ message: error.errors.map((e) => e.message) });
+    } else if (error instanceof Error) {
+      res.status(400).json({ message: error.message });
+    } else {
+      res.status(500).json({ message: "An unknown error occurred" });
+    }
   }
 });
 
@@ -48,18 +68,23 @@ router.post("/", async (req: Request, res: Response) => {
 router.put("/:id", async (req: Request, res: Response) => {
   const { id } = req.params;
   const { username, password } = req.body;
+
   try {
     const user = await User.findByPk(id);
     if (user) {
-      user.username = username;
-      user.password = password;
+      user.username = username ?? user.username; // Only update if provided
+      user.password = password ?? user.password; // Same for password
       await user.save();
       res.json(user);
     } else {
       res.status(404).json({ message: "User not found" });
     }
-  } catch (error: any) {
-    res.status(400).json({ message: error.message });
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      res.status(400).json({ message: error.message });
+    } else {
+      res.status(500).json({ message: "An unknown error occurred" });
+    }
   }
 });
 
@@ -74,8 +99,12 @@ router.delete("/:id", async (req: Request, res: Response) => {
     } else {
       res.status(404).json({ message: "User not found" });
     }
-  } catch (error: any) {
-    res.status(500).json({ message: error.message });
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      res.status(500).json({ message: error.message });
+    } else {
+      res.status(500).json({ message: "An unknown error occurred" });
+    }
   }
 });
 

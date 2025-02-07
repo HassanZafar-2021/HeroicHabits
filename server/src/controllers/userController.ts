@@ -5,7 +5,18 @@ import { User } from "../models/User.js"; // Assuming you have a User model
 
 // Registration handler
 export const registerUser = async (req: Request, res: Response) => {
-  const { username, password } = req.body;
+  const { username, password, email } = req.body as {
+    username: string;
+    password: string;
+    email: string;
+  };
+
+  // Validate input
+  if (!username || !password || !email) {
+    return res
+      .status(400)
+      .json({ message: "Please provide username, password, and email" });
+  }
 
   try {
     // Check if user already exists
@@ -18,17 +29,29 @@ export const registerUser = async (req: Request, res: Response) => {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     // Create new user
-    const user = await User.create({ username, email: req.body.email, password: hashedPassword });
+    const user = await User.create({
+      username,
+      email,
+      password: hashedPassword,
+    });
 
     res.status(201).json({ message: "User created successfully", user });
   } catch (error) {
-    res.status(500).json({ message: "Error registering user", error });
+    console.error(error); // Log error for debugging
+    res.status(500).json({ message: "Error registering user" });
   }
 };
 
 // Login handler
 export const loginUser = async (req: Request, res: Response) => {
   const { username, password } = req.body;
+
+  // Validate input
+  if (!username || !password) {
+    return res
+      .status(400)
+      .json({ message: "Please provide both username and password" });
+  }
 
   try {
     // Find user by username
@@ -52,6 +75,7 @@ export const loginUser = async (req: Request, res: Response) => {
 
     res.status(200).json({ message: "Login successful", token });
   } catch (error) {
-    res.status(500).json({ message: "Error logging in", error });
+    console.error(error); // Log error for debugging
+    res.status(500).json({ message: "Error logging in" });
   }
 };
