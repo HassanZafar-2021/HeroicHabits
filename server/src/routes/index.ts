@@ -1,13 +1,13 @@
 import express from "express";
-import userRoutes from "./userRoutes.js";
-import questRoutes from "./questRoutes.js";
 import authRoutes from "./authRoutes.js";
+import quoteRoutes from "./quoteRoutes.js";
+import authenticateToken from "../middleware/authmiddleware.js";
+import apiRoutes from "./api/index.js";
 
 const router = express.Router();
 
-// Routes
-router.use("/users", userRoutes); // Route for user-related actions
-router.use("/quests", questRoutes); // Route for quest-related actions
-router.use("/auth", authRoutes); // Route for authentication actions
+router.use("/api", authenticateToken, apiRoutes);
+router.use("/auth", authRoutes);
+router.use("/quotes", quoteRoutes);
 
 export default router;

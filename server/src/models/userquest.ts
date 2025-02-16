@@ -8,7 +8,7 @@ interface UserQuestAttributes {
   quest_id: number;
 }
 
-// Define optional fields for creation
+
 type UserQuestCreationAttributes = Optional<UserQuestAttributes, never>;
 
 export class UserQuest
@@ -19,7 +19,7 @@ export class UserQuest
   public quest_id!: number;
 }
 
-// Initialize the UserQuest model
+
 export function initUserQuestModel(sequelize: Sequelize) {
   UserQuest.init(
     {
@@ -27,21 +27,21 @@ export function initUserQuestModel(sequelize: Sequelize) {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-          model: User, // Reference User model
+          model: User, 
           key: "id",
         },
-        onDelete: "CASCADE", // Delete UserQuest entries when User is deleted
-        onUpdate: "CASCADE", // Update UserQuest entries when User ID changes
+        onDelete: "CASCADE", 
+        onUpdate: "CASCADE", 
       },
       quest_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-          model: Quest, // Reference Quest model
+          model: Quest, 
           key: "id",
         },
-        onDelete: "CASCADE", // Delete UserQuest entries when Quest is deleted
-        onUpdate: "CASCADE", // Update UserQuest entries when Quest ID changes
+        onDelete: "CASCADE", 
+        onUpdate: "CASCADE", 
       },
     },
     {

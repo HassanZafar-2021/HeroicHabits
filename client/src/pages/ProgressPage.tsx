@@ -1,67 +1,284 @@
-import React, { useState } from "react";
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
-const ProgressPage: React.FC = () => {
-  const [selectedPeriod, setSelectedPeriod] = useState("Last 7 days");
+const habitsList = [
+  { id: 1, name: "Morning Exercise" },
+  { id: 2, name: "Read 10 Pages" },
+  { id: 3, name: "Drink more water" },
+  { id: 4, name: "Healthy Meal" },
+  { id: 5, name: "No Social Media for 1 Hour" },
+];
+
+const ProgressPage = () => {
+  const [completedHabits, setCompletedHabits] = useState<number[]>([]);
+  const [streak, setStreak] = useState(0);
+  const [history, setHistory] = useState<
+    { habit: string; timestamp: string }[]
+  >([]);
+  const [mood, setMood] = useState<string>("");
+
+  useEffect(() => {
+    const storedStreak = localStorage.getItem("streak");
+    if (storedStreak) setStreak(parseInt(storedStreak));
+
+    const storedHistory = localStorage.getItem("habitHistory");
+    if (storedHistory) setHistory(JSON.parse(storedHistory));
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("streak", String(streak));
+    localStorage.setItem("habitHistory", JSON.stringify(history));
+  }, [streak, history]);
+
+  const toggleHabit = (id: number, name: string) => {
+    setCompletedHabits((prev) =>
+      prev.includes(id) ? prev.filter((habit) => habit !== id) : [...prev, id]
+    );
+
+    if (!completedHabits.includes(id)) {
+      const timestamp = new Date().toLocaleString();
+      setHistory((prev) => [...prev, { habit: name, timestamp }]);
+    }
+  };
+
+  const resetProgress = () => {
+    setCompletedHabits([]);
+    setStreak((prev) => prev + 1);
+  };
+
+  const handleMoodChange = (selectedMood: string) => {
+    setMood(selectedMood);
+  };
+
+  const progressPercentage = (completedHabits.length / habitsList.length) * 100;
+
+  const submitMood = () => {
+    if (!mood) {
+      alert("Please select a mood before submitting.");
+      return;
+    }
+    alert(`Mood for the day: ${mood}`);
+  };
 
   return (
-    <div className="h-screen bg-gradient-to-b from-yellow-50 to-blue-50 flex flex-col items-center">
-      <header className="w-full bg-white/80 backdrop-blur-sm border-b border-blue-100 p-4 flex justify-between items-center">
-        <h1 className="text-xl font-bold text-blue-800">Heroic Habits</h1>
-        <nav className="flex space-x-4">
-          <span className="text-blue-700 hover:text-blue-500 cursor-pointer">
-            Dashboard
-          </span>
-          <span className="text-blue-700 hover:text-blue-500 cursor-pointer">
-            Tasks
-          </span>
-          <span className="text-blue-700 hover:text-blue-500 cursor-pointer">
-            Progress
-          </span>
-          <span className="text-blue-700 hover:text-blue-500 cursor-pointer">
-            Settings
-          </span>
-        </nav>
-      </header>
-      <main className="w-full max-w-3xl bg-white rounded-lg shadow p-6 mt-10">
-        <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl font-bold text-gray-800">
-            Your Adventure Progress
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        minHeight: "100vh",
+        backgroundColor: "#b3e0ff", // Light blue background color
+        padding: "20px",
+      }}
+    >
+      <Link
+        to="/home"
+        style={{
+          position: "absolute",
+          top: "20px",
+          left: "20px",
+          background: "#fff",
+          padding: "8px 15px",
+          borderRadius: "5px",
+          textDecoration: "none",
+          color: "#333",
+          fontSize: "16px",
+          fontWeight: "bold",
+          boxShadow: "0px 2px 5px rgba(0,0,0,0.2)",
+        }}
+      >
+        ⬅ Home
+      </Link>
+
+      <div
+        style={{
+          backgroundColor: "white",
+          padding: "20px",
+          borderRadius: "10px",
+          boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+          width: "350px",
+        }}
+      >
+        <h1
+          style={{
+            fontSize: "24px",
+            fontWeight: "bold",
+            textAlign: "center",
+            marginBottom: "16px",
+          }}
+        >
+          Heroic Habits Progress
+        </h1>
+
+        <div
+          style={{
+            width: "100%",
+            backgroundColor: "#e0e0e0",
+            borderRadius: "50px",
+            height: "8px",
+            marginBottom: "16px",
+          }}
+        >
+          <div
+            style={{
+              backgroundColor: "#4caf50",
+              height: "100%",
+              borderRadius: "50px",
+              width: `${progressPercentage}%`,
+              transition: "width 0.5s ease",
+            }}
+          />
+        </div>
+
+        <p
+          style={{
+            textAlign: "center",
+            fontSize: "14px",
+            marginBottom: "16px",
+          }}
+        >
+          {completedHabits.length} / {habitsList.length} habits completed
+        </p>
+
+        <ul style={{ listStyleType: "none", padding: 0 }}>
+          {habitsList.map((habit) => (
+            <li
+              key={habit.id}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                marginBottom: "12px",
+              }}
+            >
+              <input
+                type="checkbox"
+                checked={completedHabits.includes(habit.id)}
+                onChange={() => toggleHabit(habit.id, habit.name)}
+                style={{ width: "20px", height: "20px", marginRight: "8px" }}
+              />
+              <span style={{ fontSize: "18px" }}>{habit.name}</span>
+            </li>
+          ))}
+        </ul>
+
+        <button
+          onClick={resetProgress}
+          style={{
+            width: "100%",
+            backgroundColor: "#007bff",
+            color: "white",
+            padding: "12px",
+            borderRadius: "8px",
+            fontWeight: "bold",
+            cursor: "pointer",
+            marginTop: "16px",
+            transition: "background-color 0.3s",
+          }}
+        >
+          Complete Day & Increase Streak
+        </button>
+
+        <div style={{ marginTop: "24px", textAlign: "center" }}>
+          <h2 style={{ fontSize: "20px", fontWeight: "600" }}>
+            🔥 Streak: {streak} Days
           </h2>
-          <select
-            className="border rounded-md px-3 py-2 text-sm text-gray-600"
-            value={selectedPeriod}
-            onChange={(e) => setSelectedPeriod(e.target.value)}
+        </div>
+
+        <div style={{ marginTop: "24px" }}>
+          <h2 style={{ fontSize: "18px", fontWeight: "600" }}>
+            📜 Habit History
+          </h2>
+          <ul
+            style={{
+              fontSize: "14px",
+              marginTop: "8px",
+              maxHeight: "160px",
+              overflowY: "auto",
+              backgroundColor: "#e0e0e0",
+              padding: "10px",
+              borderRadius: "8px",
+            }}
           >
-            <option>Last 7 days</option>
-            <option>Last 30 days</option>
-            <option>Last 3 months</option>
-            <option>Last year</option>
-          </select>
+            {history.length > 0 ? (
+              history.map((entry, index) => (
+                <li key={index} style={{ marginBottom: "8px" }}>
+                  ✅ {entry.habit} -{" "}
+                  <span style={{ color: "#616161" }}>{entry.timestamp}</span>
+                </li>
+              ))
+            ) : (
+              <p style={{ color: "#616161" }}>No history yet.</p>
+            )}
+          </ul>
         </div>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-          <div className="bg-gray-50 p-4 rounded-lg text-center">
-            <p className="text-sm text-gray-600">Total Quests</p>
-            <p className="text-2xl font-bold text-gray-800">248</p>
-          </div>
-          <div className="bg-gray-50 p-4 rounded-lg text-center">
-            <p className="text-sm text-gray-600">Completed</p>
-            <p className="text-2xl font-bold text-green-600">186</p>
-          </div>
-          <div className="bg-gray-50 p-4 rounded-lg text-center">
-            <p className="text-sm text-gray-600">In Progress</p>
-            <p className="text-2xl font-bold text-orange-600">42</p>
-          </div>
-          <div className="bg-gray-50 p-4 rounded-lg text-center">
-            <p className="text-sm text-gray-600">Achievement Points</p>
-            <p className="text-2xl font-bold text-purple-600">1,240</p>
+
+        <div style={{ marginTop: "24px" }}>
+          <h2 style={{ fontSize: "18px", fontWeight: "600" }}>
+            😊 Mood Tracker
+          </h2>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              marginTop: "12px",
+            }}
+          >
+            <button
+              onClick={() => handleMoodChange("😊")}
+              style={{
+                fontSize: "24px",
+                margin: "0 10px",
+                cursor: "pointer",
+                backgroundColor: "transparent",
+                border: "none",
+              }}
+            >
+              😊
+            </button>
+            <button
+              onClick={() => handleMoodChange("😐")}
+              style={{
+                fontSize: "24px",
+                margin: "0 10px",
+                cursor: "pointer",
+                backgroundColor: "transparent",
+                border: "none",
+              }}
+            >
+              😐
+            </button>
+            <button
+              onClick={() => handleMoodChange("😞")}
+              style={{
+                fontSize: "24px",
+                margin: "0 10px",
+                cursor: "pointer",
+                backgroundColor: "transparent",
+                border: "none",
+              }}
+            >
+              😞
+            </button>
           </div>
         </div>
-        <iframe
-          src="https://pixe.la/v1/users/a-know/graphs/test-graph"
-          className="h-60 w-full rounded-lg border border-gray-200"
-          title="Progress Graph"
-        />
-      </main>
+
+        <button
+          onClick={submitMood}
+          style={{
+            width: "100%",
+            backgroundColor: "#28a745",
+            color: "white",
+            padding: "12px",
+            borderRadius: "8px",
+            fontWeight: "bold",
+            cursor: "pointer",
+            marginTop: "16px",
+          }}
+        >
+          Submit Mood
+        </button>
+      </div>
     </div>
   );
 };

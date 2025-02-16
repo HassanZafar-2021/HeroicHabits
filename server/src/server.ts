@@ -4,12 +4,10 @@ import sequelize from "./config/connection.js";
 import routes from "./routes/index.js";
 import morgan from "morgan";
 import helmet from "helmet";
-import cors from "cors";
 
-// Load environment variables
 dotenv.config();
 
-// Validate required environment variables
+// Check for required environment variables
 const requiredEnvVars = ["JWT_SECRET_KEY", "DB_NAME", "DB_USER", "DB_PASSWORD"];
 requiredEnvVars.forEach((varName) => {
   if (!process.env[varName]) {
@@ -18,23 +16,23 @@ requiredEnvVars.forEach((varName) => {
 });
 
 const app: Express = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 3001;
 app.use(express.static("../client/dist"));
 
 // Middleware
 app.use(express.json());
 app.use(morgan("dev"));
 app.use(helmet());
-app.use(cors());
 
 // Database synchronization
 sequelize
   .sync({ force: process.env.NODE_ENV === "development" })
   .then(() => console.log("Database synced!"))
-  .catch((err) => console.error("Error syncing the database:", err));
+  .catch((err: Error) => console.error("Error syncing the database:", err));
 
 // Routes
-app.use("/api", routes);
+app.use(routes);
+// app.use("auth", authRoutes);
 
 // Centralized error handling
 app.use((err: any, req: Request, res: Response, next: NextFunction) => {
@@ -53,7 +51,6 @@ const server = app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });
 
-// Graceful shutdown
 const gracefulShutdown = (signal: string) => {
   console.log(`${signal} received: closing server`);
   server.close(() => {
@@ -69,11 +66,11 @@ const gracefulShutdown = (signal: string) => {
   process.on(signal, () => gracefulShutdown(signal))
 );
 
-// Unhandled Rejection and Uncaught Exception
 process.on("unhandledRejection", (reason, promise) => {
   console.error("Unhandled Rejection:", promise, "reason:", reason);
   process.exit(1);
 });
+
 process.on("uncaughtException", (err) => {
   console.error("Uncaught Exception:", err);
   process.exit(1);

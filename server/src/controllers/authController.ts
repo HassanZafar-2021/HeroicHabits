@@ -1,42 +1,33 @@
-import { Request, Response, NextFunction } from "express";
-import jwt, { JwtPayload } from "jsonwebtoken";
+import { User } from "../models/User.js";
+import jwt from "jsonwebtoken";
+import bcrypt from "bcrypt";
+import { Request, Response } from "express";
 
-// Augment the Express Request interface to include `user`
-declare module "express-serve-static-core" {
-  interface Request {
-    user?: JwtPayload;
-  }
-}
+// Login function to authenticate a user
+export const login = async (req: Request, res: Response) => {
+  try {
+    const { username, password } = req.body;
+    const user = await User.findOne({ where: { username } });
 
-// Token verification middleware
-export const verifyToken = (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  const token = req.headers["authorization"]?.split(" ")[1]; // Get token from Authorization header
+    if (!user)
+      return res.status(401).json({ message: "Authentication failed" });
 
-  if (!token) {
-    return res.status(403).json({ message: "No token provided" });
-  }
+    const passwordIsValid = await bcrypt.compare(password, user.password);
+    if (!passwordIsValid)
+      return res.status(401).json({ message: "Authentication failed" });
 
-  jwt.verify(token, process.env.JWT_SECRET ?? "secretKey", (err, decoded) => {
-    if (err) {
-      return res.status(401).json({ message: "Invalid or expired token" });
+    const secretKey = process.env.JWT_SECRET_KEY;
+    if (!secretKey) {
+      return res.status(500).json({ message: "Server error", error: "JWT secret key is not defined" });
     }
+    const token = jwt.sign(
+      { id: user.id, username: user.username },
+      secretKey,
+      { expiresIn: "1h" }
+    );
 
-    // Attach user info to the request object
-    req.user = decoded as JwtPayload;
-    next();
-  });
-};
-
-// Example of an authenticated route
-export const getUserProfile = (req: Request, res: Response) => {
-  const user = req.user; // `user` comes from the `verifyToken` middleware
-  if (!user) {
-    return res.status(404).json({ message: "User not found" });
+    return res.json({ token });
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error: (error as Error).message });
   }
-
-  res.status(200).json({ message: "User profile", user });
 };

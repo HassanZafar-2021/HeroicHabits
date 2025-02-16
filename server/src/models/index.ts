@@ -7,8 +7,8 @@ import { initUserQuestModel, UserQuest } from "./userquest";
 // Initialize Sequelize
 const sequelize = new Sequelize({
   dialect: "sqlite",
-  storage: ":memory:", // Use in-memory storage for simplicity
-  logging: false, // Disable logging for cleaner output
+  storage: ":memory:", 
+  logging: false, 
 });
 
 // Initialize models

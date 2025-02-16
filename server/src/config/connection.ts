@@ -1,15 +1,14 @@
 import { Sequelize } from "sequelize";
 import dotenv from "dotenv";
 
-dotenv.config(); // Load environment variables
+dotenv.config(); 
 
-// Validate required environment variables
 const requiredEnvVars = [
   "DB_NAME",
   "DB_USER",
   "DB_PASSWORD",
-  // "DB_HOST", // Make sure DB_HOST is validated if it's necessary
-  // "NODE_ENV", // Ensuring NODE_ENV is checked
+  // "DB_HOST", 
+  // "NODE_ENV", 
 ];
 requiredEnvVars.forEach((varName) => {
   if (!process.env[varName]) {
@@ -17,7 +16,6 @@ requiredEnvVars.forEach((varName) => {
   }
 });
 
-// Initialize Sequelize instance
 const sequelize = new Sequelize(
   process.env.DB_NAME!,
   process.env.DB_USER!,
@@ -25,9 +23,9 @@ const sequelize = new Sequelize(
   {
     host: process.env.DB_HOST || "localhost",
     dialect: "postgres",
-    logging: process.env.NODE_ENV === "development", // Enable logging only in development
+    logging: process.env.NODE_ENV === "development", 
     define: {
-      timestamps: false, // Disable automatic timestamps if not needed
+      timestamps: false, 
     },
     pool: {
       max: 5,
@@ -38,13 +36,11 @@ const sequelize = new Sequelize(
   }
 );
 
-// Test the database connection
 sequelize
   .authenticate()
   .then(() => console.log("Database connection established successfully"))
   .catch((err) => console.error("Unable to connect to the database:", err));
 
-// Import and initialize models
 import { initUserModel } from "../models/User.js";
 import { initQuestModel } from "../models/Quest.js";
 import { initHabitModel } from "../models/habits.js";
@@ -57,7 +53,7 @@ initUserQuestModel(sequelize);
 
 // Sync database
 sequelize
-  .sync({ force: process.env.NODE_ENV === "development" }) // Sync only in development environment
+  .sync({ force: process.env.NODE_ENV === "development" }) 
   .then(() => console.log("Database synced successfully"))
   .catch((err) => console.error("Error syncing the database:", err));
 

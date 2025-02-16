@@ -71,15 +71,15 @@ export function initQuestModel(sequelize: Sequelize) {
       is_completed: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
-        defaultValue: false, // Default is not completed
+        defaultValue: false, 
       },
     },
     {
       sequelize,
       modelName: "Quest",
       tableName: "quests",
-      timestamps: true, // Automatically manages created_at and updated_at
-      underscored: true, // Use snake_case column naming
+      timestamps: true, 
+      underscored: true, 
     }
   );
 }
