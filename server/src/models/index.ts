@@ -1,8 +1,8 @@
 import { Sequelize } from "sequelize";
-import { initUserModel, User } from "./User";
-import { initHabitModel, Habit } from "./habits";
-import { initQuestModel, Quest } from "./Quest";
-import { initUserQuestModel, UserQuest } from "./userquest";
+import { initUserModel, User } from "./User.js";
+import { initHabitModel, Habit } from "./habits.js";
+import { initQuestModel, Quest } from "./Quest.js";
+import { initUserQuestModel, UserQuest } from "./userquest.js";
 
 // Initialize Sequelize
 const sequelize = new Sequelize({
