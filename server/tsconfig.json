@@ -1,12 +1,12 @@
 {
   "compilerOptions": {
     "target": "ES2022",
-    "module": "ESNext", // Ensures ES Modules syntax is used
+    "module": "ESNext",
     "moduleResolution": "node",
-    "esModuleInterop": true, // Ensures compatibility for common modules
+    "esModuleInterop": true,
     "strict": true,
     "outDir": "./dist",
-    "forceConsistentCasingInFileNames": true,
+    "forceConsistentCasingInFileNames": true
   },
   "include": ["src"]
 }
