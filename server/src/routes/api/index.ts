@@ -1,9 +1,12 @@
 import express from "express";
-const router = express.Router();
 import userRoutes from "./userRoutes.js";
 import questRoutes from "./questRoutes.js";
 import pixelaRoutes from "./pixelaRoutes.js";
+import authRoutes from "../authRoutes.js";
 
+const router = express.Router();
+
+router.use("/auth", authRoutes);
 router.use("/users", userRoutes);
 router.use("/quests", questRoutes);
 router.use("/pixela", pixelaRoutes);
