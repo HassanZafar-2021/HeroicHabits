@@ -61,7 +61,9 @@ const Zenquote = () => {
   );
 };
 
-const styles = {
+import { CSSProperties } from "react";
+
+const styles: { [key: string]: CSSProperties } = {
   quoteContainer: {
     marginBottom: "30px",
     padding: "15px",
