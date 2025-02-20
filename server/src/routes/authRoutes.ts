@@ -15,7 +15,7 @@ import { User } from "../models/User.js";
 
 const router = Router();
 
-router.post("/signup", async (req: Request, res: Response): Promise<void> => {
+router.post("/register", async (req: Request, res: Response): Promise<void> => {
   try {
     const { username, email, password } = req.body;
 
