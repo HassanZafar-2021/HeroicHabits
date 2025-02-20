@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom"; // Import Link and useNavigate
+import { Link, useNavigate } from "react-router-dom";
 import QuestSearch from "../components/QuestSearch";
 import ColorPicker from "../components/ColorPicker";
 import ProfileAvatar from "../components/ProfileAvatar";
 import Zenquote from "../components/zenQuote";
+import { GraphDisplay } from "../components/GraphDisplay"; // Assuming GraphDisplay replaces HabitTracker
+import { Quest } from "../../types/quest";
 
 const getRandomColor = () => {
   const colors = ["#ffcc00", "#ff6666", "#66ccff", "#99ff99", "#ff99cc"];
@@ -11,26 +13,23 @@ const getRandomColor = () => {
 };
 
 const HomePage = () => {
-  let navigate = useNavigate();
+  const navigate = useNavigate();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [quests, setQuests] = useState([
+  const [quests, setQuests] = useState<Quest[]>([
     {
       name: "Forest of Focus",
-      progress: "7/10",
       image: "/ForestFocus.png",
       color: "#28a745",
       link: "/forestfocus",
     },
     {
       name: "Peak Performance",
-      progress: "5/10",
       image: "/workout.png",
       color: "#ff3b30",
       link: "/peakperformance",
     },
     {
       name: "Crystal Clarity",
-      progress: "3/10",
       image: "/crystal.png",
       color: "#add8e6",
       link: "/crystalclarity",
@@ -48,9 +47,8 @@ const HomePage = () => {
   }, []);
 
   const addNewQuest = (questName: string) => {
-    const newQuest = {
+    const newQuest: Quest = {
       name: questName,
-      progress: "0/10",
       image: "/QuestIcon.png",
       color: getRandomColor(),
       link: "",
@@ -68,7 +66,6 @@ const HomePage = () => {
 
   return (
     <div style={styles.container}>
-      {/* Make Profile Avatar Clickable */}
       <Link to="/profile" style={styles.profileLink}>
         <ProfileAvatar />
       </Link>
@@ -101,20 +98,23 @@ const HomePage = () => {
             style={{
               ...styles.questCard,
               backgroundColor: quest.color,
-              animation: "fadeIn 0.5s ease-in-out",
               cursor: index < 3 ? "pointer" : "default",
             }}
           >
             <img src={quest.image} alt={quest.name} style={styles.questImage} />
             <h3 style={styles.questTitle}>{quest.name}</h3>
-            <p style={styles.progressText}>{quest.progress}</p>
-            {quest.link ? (
+            {quest.link && (
               <Link to={quest.link} style={styles.questLink}>
                 →
               </Link>
-            ) : null}
+            )}
           </div>
         ))}
+      </div>
+
+      <div style={styles.pixelaContainer}>
+        <h2 style={styles.graphTitle}>Your Habit Progress</h2>
+        <GraphDisplay />
       </div>
     </div>
   );
@@ -163,6 +163,22 @@ const styles: { [key: string]: React.CSSProperties } = {
     right: "10px",
     fontSize: "18px",
     color: "#fff",
+  },
+  pixelaContainer: {
+    marginTop: "40px",
+    padding: "20px",
+    background: "#fff",
+    borderRadius: "12px",
+    boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
+    width: "80%",
+    maxWidth: "600px",
+    marginLeft: "auto",
+    marginRight: "auto",
+  },
+  graphTitle: {
+    fontSize: "22px",
+    fontWeight: "bold",
+    marginBottom: "10px",
   },
 };
 

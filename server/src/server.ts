@@ -2,13 +2,22 @@ import express, { Express, Request, Response, NextFunction } from "express";
 import dotenv from "dotenv";
 import sequelize from "./config/connection.js";
 import routes from "./routes/index.js";
+import pixelaRoutes from "./routes/api/pixelaRoutes.js"; // Import Pixela routes
 import morgan from "morgan";
 import helmet from "helmet";
 
 dotenv.config();
 
 // Check for required environment variables
-const requiredEnvVars = ["JWT_SECRET_KEY", "DB_NAME", "DB_USER", "DB_PASSWORD"];
+const requiredEnvVars = [
+  "JWT_SECRET_KEY",
+  "DB_NAME",
+  "DB_USER",
+  "DB_PASSWORD",
+  "PIXELA_USERNAME",
+  "PIXELA_TOKEN",
+  "PIXELA_GRAPH_ID",
+];
 requiredEnvVars.forEach((varName) => {
   if (!process.env[varName]) {
     throw new Error(`${varName} is missing in environment variables.`);
@@ -31,8 +40,8 @@ sequelize
   .catch((err: Error) => console.error("Error syncing the database:", err));
 
 // Routes
-app.use(routes);
-// app.use("auth", authRoutes);
+app.use("/api", routes);
+app.use("/api/pixela", pixelaRoutes); // Add Pixela API routes
 
 // Centralized error handling
 app.use((err: any, req: Request, res: Response, next: NextFunction) => {
