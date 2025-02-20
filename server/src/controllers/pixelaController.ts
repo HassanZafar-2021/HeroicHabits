@@ -15,7 +15,9 @@ export const createUser = async (req: Request, res: Response) => {
 
 // Create a new graph
 export const createGraph = async (req: Request, res: Response) => {
-  const { username, token, graphData } = req.body;
+  const { graphData } = req.body;
+  const username = req.params.username || req.body.username;
+  const token = req.headers["x-user-token"] as string;
 
   try {
     const graph = await pixelaService.createGraph(username, token, graphData);
@@ -27,7 +29,8 @@ export const createGraph = async (req: Request, res: Response) => {
 
 // Get all graphs
 export const getGraphs = async (req: Request, res: Response) => {
-  const { username, token } = req.body;
+  const username = req.params.username || (req.query.username as string);
+  const token = req.headers["x-user-token"] as string;
 
   try {
     const graphs = await pixelaService.getGraphs(username, token);
@@ -39,7 +42,10 @@ export const getGraphs = async (req: Request, res: Response) => {
 
 // Add habit data (pixel)
 export const addHabitData = async (req: Request, res: Response) => {
-  const { username, token, graphId, date, quantity } = req.body;
+  const { date, quantity } = req.body;
+  const username = req.params.username || req.body.username;
+  const graphId = req.params.graphId || req.body.graphId;
+  const token = req.headers["x-user-token"] as string;
 
   try {
     const response = await pixelaService.addPixel(
@@ -57,7 +63,9 @@ export const addHabitData = async (req: Request, res: Response) => {
 
 // Get graph statistics
 export const getGraphStats = async (req: Request, res: Response) => {
-  const { username, token, graphId } = req.body;
+  const username = req.params.username || (req.query.username as string);
+  const graphId = req.params.graphId || (req.query.graphId as string);
+  const token = req.headers["x-user-token"] as string;
 
   try {
     const stats = await pixelaService.getGraphStats(username, token, graphId);

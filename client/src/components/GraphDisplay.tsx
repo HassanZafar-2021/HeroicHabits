@@ -2,7 +2,7 @@ import React from "react";
 
 export const GraphDisplay: React.FC = () => {
   const logHabit = async () => {
-    const date = new Date().toISOString().split("T")[0].replace(/-/g, "");
+    const date = new Date().toISOString().split("T")[0].replace(/-/g, ""); // Format: YYYYMMDD
 
     const response = await fetch(
       "https://pixe.la/v1/users/rzafar/graphs/habit-tracker",
@@ -13,7 +13,7 @@ export const GraphDisplay: React.FC = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          date: date,
+          date,
           quantity: "1",
         }),
       }
@@ -36,7 +36,7 @@ export const GraphDisplay: React.FC = () => {
       />
       <button
         onClick={logHabit}
-        className="mt-4 p-2 bg-blue-500 text-green rounded-lg"
+        className="mt-4 p-2 bg-limegreen text-black rounded-lg"
       >
         Log Habit
       </button>

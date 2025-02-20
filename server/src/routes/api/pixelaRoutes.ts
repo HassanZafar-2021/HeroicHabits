@@ -1,12 +1,11 @@
 import express from "express";
 import {
   createGraph,
-  addDataToGraph,
+  addHabitData,
 } from "../../controllers/pixelaController.js";
 
 const router = express.Router();
 
 router.post("/create-graph", createGraph);
-router.post("/add-data", addDataToGraph);
-
+router.post("/add-data", addHabitData);
 export default router;
