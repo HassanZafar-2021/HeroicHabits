@@ -2,7 +2,7 @@
 
 ## Deployed
 
-https://heroichabits.onrender.com
+[https://heroichabits.onrender.com](https://heroichabits.onrender.com/)
 
 ## Description
 
