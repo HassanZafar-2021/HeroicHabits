@@ -1,4 +1,4 @@
-import Auth from "../../util/auth"; // Ensure Auth module has getToken() method
+import Auth from "../util/auth"; // Ensure Auth module has getToken() method
 
 // Function to retrieve users with authentication
 const retrieveUsers = async () => {

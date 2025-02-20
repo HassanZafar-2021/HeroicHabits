@@ -1,66 +1,102 @@
 import { useState, useEffect } from "react";
 
+const API_BASE_URL =
+  process.env.REACT_APP_API_URL || "https://heroic-habits.onrender.com";
+
 const Zenquote = () => {
   const [quote, setQuote] = useState<string | null>(null);
   const [author, setAuthor] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    const fetchQuote = async () => {
-      try {
-        const response = await fetch("/quotes"); // Assuming your Express backend serves this endpoint
-        if (!response.ok) {
-          throw new Error("Failed to fetch quote");
-        }
-        const data = await response.json();
-        if (data && data[0]) {
-          setQuote(data[0].q); // Zenquotes response has a "q" field for the quote
-          setAuthor(data[0].a); // Zenquotes response has an "a" field for the author
-        } else {
-          setError("Failed to load a quote.");
-        }
-      } catch (err) {
-        if (err instanceof Error) {
-          setError(`An error occurred: ${err.message}`);
-        } else {
-          setError("An unknown error occurred.");
-        }
-      } finally {
-        setLoading(false);
-      }
-    };
+  const fetchQuote = async () => {
+    setLoading(true);
+    setError(null);
 
-    fetchQuote();
-  }, []); // Fetch only once when the component mounts
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/quotes`); // ✅ Corrected API URL
+      if (!response.ok) {
+        throw new Error(`Failed to fetch quote (Status: ${response.status})`);
+      }
+
+      const data = await response.json();
+      if (data && data[0]) {
+        setQuote(data[0].q || "No quote available.");
+        setAuthor(data[0].a || "Unknown"); // ✅ Default to 'Unknown' if missing
+      } else {
+        setError("No quote received from API.");
+      }
+    } catch (err) {
+      if (err instanceof Error) {
+        setError(`Error fetching quote: ${err.message}`);
+      } else {
+        setError("An unknown error occurred.");
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchQuote(); // Fetch quote on mount
+  }, []);
 
   if (loading) {
     return <p>Loading quote...</p>;
   }
 
   if (error) {
-    return <p>{error}</p>;
+    return <p style={styles.error}>{error}</p>;
   }
 
   return (
     <div style={styles.quoteContainer}>
       <h2>Quote of the Moment</h2>
-      <blockquote style={{ fontStyle: "italic", fontSize: "20px" }}>
-        "{quote}"
-      </blockquote>
-      <p>- {author}</p>
+      <blockquote style={styles.quoteText}>"{quote}"</blockquote>
+      <p style={styles.authorText}>- {author}</p>
+      <button style={styles.refreshButton} onClick={fetchQuote}>
+        Refresh Quote
+      </button>
     </div>
   );
 };
 
-const styles = {
+import { CSSProperties } from "react";
+
+const styles: { [key: string]: CSSProperties } = {
   quoteContainer: {
     marginBottom: "30px",
-    padding: "10px",
+    padding: "15px",
     backgroundColor: "#f9f9f9",
-    borderRadius: "5px",
+    borderRadius: "8px",
     border: "1px solid #ddd",
     boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+    textAlign: "center",
+    maxWidth: "600px",
+    margin: "auto",
+  },
+  quoteText: {
+    fontStyle: "italic",
+    fontSize: "20px",
+    marginBottom: "10px",
+  },
+  authorText: {
+    fontSize: "16px",
+    fontWeight: "bold",
+  },
+  refreshButton: {
+    marginTop: "10px",
+    padding: "8px 12px",
+    backgroundColor: "#007bff",
+    color: "white",
+    border: "none",
+    borderRadius: "5px",
+    cursor: "pointer",
+    fontSize: "14px",
+  },
+  error: {
+    color: "red",
+    fontWeight: "bold",
   },
 };
 

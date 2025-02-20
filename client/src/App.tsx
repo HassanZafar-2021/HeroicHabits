@@ -13,7 +13,6 @@ const App = () => {
   return (
     <AuthProvider>
       <Router>
-
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/register" element={<Signup />} />
