@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { pixelaService } from "../../../server/src/services/pixelaService";
 import { GraphDisplay } from "./GraphDisplay";
-import { GraphStats } from "../../types/GraphStats";
+import { GraphStats } from "../types/graphStats";
 
 interface HabitTrackerProps {
   username: string;

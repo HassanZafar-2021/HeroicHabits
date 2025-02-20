@@ -5,7 +5,7 @@ import ColorPicker from "../components/ColorPicker";
 import ProfileAvatar from "../components/ProfileAvatar";
 import Zenquote from "../components/zenQuote";
 import { GraphDisplay } from "../components/GraphDisplay"; // Assuming GraphDisplay replaces HabitTracker
-import { Quest } from "../../types/quest";
+import { Quest } from "../types/quest";
 
 const getRandomColor = () => {
   const colors = ["#ffcc00", "#ff6666", "#66ccff", "#99ff99", "#ff99cc"];
